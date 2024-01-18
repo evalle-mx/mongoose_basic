@@ -14,3 +14,11 @@ $ touch schema/User.js
 
 # create/edit env file
 $ touch .env
+
+
+# install develop-env dependency (nodemon will refresh each change and re-run)
+$ npm i --save-dev nodemon
+
+
+####  RUN #########
+nodemon script.js
