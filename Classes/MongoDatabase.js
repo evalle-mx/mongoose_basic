@@ -3,9 +3,8 @@ require('dotenv').config()
 
 class MongoDatabase {
     constructor() {
-        this.studentID = process.env.studentID;
         this._Url=process.env.ATLAS_URL;
-        this._studentName = 'unknown'
+        this._className = 'unknown'
         this.connect()
     }
 
@@ -23,17 +22,17 @@ class MongoDatabase {
         })
     }
  
-    set studentName(studentName) {
-        this._studentName = studentName;
+    set myName(anyName) {
+        this._className = anyName;
     }
  
-    get studentName() {
-        return this._studentName;
+    get myName() {
+        return this._className;
     }
  
-    greetStudent() {
+    greetClass() {
         console.log(
-            "Hello, ! Your university ID is " + this.studentID);
+            "Hello, ! My class name is " + this._className);
     }
 
     getUrl(){
