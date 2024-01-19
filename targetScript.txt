@@ -1,0 +1,52 @@
+import mongoose from 'mongoose';
+import { STSClient, AssumeRoleCommand } from '@aws-sdk/client-sts';
+
+const sts = new STSClient();
+
+class Database {
+    static async getSTSCredentials() {
+        const timestamp = new Date().getTime();
+
+        const params = {
+            RoleArn: 'arn:aws:iam::265823718382:role/atlas-aws-iam-test-role',
+            RoleSessionName: `variant-session-${timestamp}`,
+        };
+
+        const assumeRoleResponse = await sts.send(new AssumeRoleCommand(params));
+
+        return Object.entries(assumeRoleResponse.Credentials).reduce(
+            (acc, [key, credential]) => ({
+                ...acc,
+                [key]: encodeURIComponent(credential),
+            }),
+            {}
+        );
+    };
+
+    static async createServer() {
+        const {
+            AccessKeyId: accessKeyId,
+            SecretAccessKey: secretAccessKey,
+            SessionToken: sessionToken,
+        } = await this.getSTSCredentials();
+
+        return `mongodb+srv://${accessKeyId}:${secretAccessKey}@variant.brf4e.mongodb.net/test?authSource=%24external&authMechanism=MONGODB-AWS&authMechanismProperties=AWS_SESSION_TOKEN:${sessionToken}`;
+    };
+
+    static async connect() {
+        const uri = await this.createServer();
+
+        const { connection } = await mongoose.connect(uri, {
+            useCreateIndex: true,
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+        });
+        connection.once('error', (err) => {
+            globalLogger.error('🛑⚠🚫🛑⚠🚫🛑 Mongoose error', err);
+        });
+    }
+}
+
+const db = new Database()
+console.log(Object.keys(db))

@@ -3,13 +3,25 @@ require('dotenv').config()
 
 class MongoDatabase {
     constructor() {
-        this._Url=process.env.ATLAS_URL;
+        this._Url=this.createServer()    //process.env.ATLAS_URL;
         this._className = 'unknown'
         this.connect()
     }
 
+    createServer() {
+        // const {
+        //     AccessKeyId: accessKeyId,
+        //     SecretAccessKey: secretAccessKey,
+        //     SessionToken: sessionToken,
+        // } = await this.getSTSCredentials();
+        
+        //return `mongodb+srv://${accessKeyId}:${secretAccessKey}@variant.brf4e.mongodb.net/test?authSource=%24external&authMechanism=MONGODB-AWS&authMechanismProperties=AWS_SESSION_TOKEN:${sessionToken}`;
+      
+        return `mongodb+srv://${process.env.accessKeyId}:${process.env.secretAccessKey}@${process.env.ATLAS_CLUSTER}?retryWrites=true&w=majority`;
+    };
+
     connect(){
-        mongoose.connect(process.env.ATLAS_URL)
+        mongoose.connect(this._Url)
         
         const db = mongoose.connection
         
