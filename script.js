@@ -23,12 +23,21 @@ db.on('error', (e) => {  //DO it everytime detects an error 7888989
     console.log( e );
 })
 
+// ## FINDALL (initial testing)
+// findAll();
 
 // ## CREATE
 // storeUser()
 
 // ## FIND
 findElem();
+
+
+async function findAll(){
+    const users = await User.find();
+    console.log(users);
+    console.log(`  >>  ${users.length} users on collection: user << `);
+}
 
 async function findElem() {
     try {
@@ -42,7 +51,7 @@ async function findElem() {
         // .populate('bestFriend')    // Acts like JOIN
         // .limit(1)
         // .select('age fullName bestFriend')
-        console.log(user); 
+        console.log(user===null?'No user (null)':user); 
 
     } catch (e) {
         console.log(e.message);
