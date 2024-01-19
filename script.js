@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const User = require('./schema/User')
+const UniversityStudent = require('./Classes/UniversityStudent');
 
 var ATLAS_URI = process.env.ATLAS_URL;
 //'mongodb+srv://<username>:<pass>@<cluster.dnsname>.mongodb.net/crashCourse';
@@ -30,7 +31,9 @@ db.on('error', (e) => {  //DO it everytime detects an error 7888989
 // storeUser()
 
 // ## FIND
-findElem();
+// findElem();
+
+testClass()
 
 
 async function findAll(){
@@ -77,3 +80,13 @@ async function storeUser(){
     }
 }
 
+
+
+// class testing:
+function testClass(){
+    console.log('testClass');
+ 
+    const some = new UniversityStudent()
+    console.log(some);
+    some.greetStudent()
+}

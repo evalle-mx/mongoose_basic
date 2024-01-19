@@ -13,6 +13,7 @@ leeMe.txt
 # testing
 /coverage
 ./data/constants.js
+/Classes/UniversityStudent.js
 
 # production
 /build
