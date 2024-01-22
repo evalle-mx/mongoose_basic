@@ -6,7 +6,7 @@ const UniversityStudent = require('./Classes/UniversityStudent');
 
 var ATLAS_URI = process.env.ATLAS_URL;
 //'mongodb+srv://<username>:<pass>@<cluster.dnsname>.mongodb.net/crashCourse';
-console.log(`ATLAS_URI: ${ATLAS_URI}`);
+//console.log(`ATLAS_URI: ${ATLAS_URI}`);
 
 mongoose.connect(
     ATLAS_URI
@@ -31,9 +31,9 @@ db.on('error', (e) => {  //DO it everytime detects an error 7888989
 // storeUser()
 
 // ## FIND
-// findElem();
+findElem();
 
-testClass()
+// testClass()
 
 
 async function findAll(){
@@ -45,7 +45,7 @@ async function findAll(){
 async function findElem() {
     try {
         const user =
-        await User.findById('65a994f47aeb7dfd7185c753');
+        await User.findById('65adc8572f2ff3f661355bcd');
         // await User.findOne({fullName:'x'});  //find, findOne, exists , *deleteOne
 
         ///Via Query
@@ -74,6 +74,7 @@ async function storeUser(){
         await user.save();
 
         console.log(`user: ${user}`); 
+        console.log(`ID: ${user._id}`);
     } catch ( e ) {
         console.error(e.message);
         //console.log(e.errors.age);
